@@ -1,3 +1,5 @@
+using System.Dynamic;
+
 public static class ArraysTester {
     /// <summary>
     /// Entry point for the tests
@@ -39,7 +41,18 @@ public static class ArraysTester {
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return new double[0]; // replace this return statement with your own
+        // create a new array of doubles with the length of variable 'length'
+        var result = new double[length];
+
+        // loop through the array and set the value of each element to be 'number' multiplied by the index plus 1
+        for (int i = 0; i < length; i++)
+        {
+            result[i] = number * (i + 1);
+        }
+
+        // return the array
+        return result;        
+
     }
     
     /// <summary>
@@ -56,6 +69,33 @@ public static class ArraysTester {
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // create a new list to store the rotated values
+        var rotated = new List<int>();
+
+        // Get the first part of the new array
+        // loop through the list starting at the index of the length of the list minus the amount
+        for (int i = data.Count - amount; i < data.Count; i++)
+        {
+            // add the value at the current index to the rotated list
+            rotated.Add(data[i]);
+        }
+        // Get the second part of the new array
+        // loop through data array starting at the beginning and ending at length
+        for (int i = 0; i < data.Count - amount; i++)
+        {
+            // add the value at the current index to the rotated list
+            rotated.Add(data[i]);
+        }
+
+        // loop through the list and set the value at each index to the value at the same index in the rotated list
+        for (int i = 0; i < data.Count; i++)
+        {
+            data[i] = rotated[i];
+        }
+
+        // // return the list
+        // return;
 
     }
 }
