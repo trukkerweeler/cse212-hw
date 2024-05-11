@@ -18,7 +18,6 @@ public class CustomerServiceSolution {
         service.AddNewCustomer();
         service.ServeCustomer();
         // Defect(s) Found: This found that the ServeCustomer should get the customer before deleting from the list
-
         Console.WriteLine("=================");
 
         // Test 2

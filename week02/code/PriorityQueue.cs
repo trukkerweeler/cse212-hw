@@ -24,12 +24,20 @@
         var highPriorityIndex = 0;
         for (int index = 1; index < _queue.Count - 1; index++) {
             if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
-                highPriorityIndex = index;
+                highPriorityIndex = index + 1;
+                Console.WriteLine($"highPriorityIndex: {highPriorityIndex}");
         }
 
-        // Remove and return the item with the highest priority
+        // Remove the item with the highest priority 
         var value = _queue[highPriorityIndex].Value;
+        Console.WriteLine($"Removing {value} with priority {_queue[highPriorityIndex].Priority}");
+        _queue.RemoveAt(highPriorityIndex);
         return value;
+
+
+        // // Remove and return the item with the highest priority
+        // var value = _queue[highPriorityIndex].Value;
+        // return value;
     }
 
     public override string ToString() {

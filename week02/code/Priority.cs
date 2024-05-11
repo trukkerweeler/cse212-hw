@@ -8,23 +8,57 @@
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Test that Enqueue adds a new item to the back of the queue
+        // Expected Result: [A (Pri:1), B (Pri:2), C (Pri:3)]
+        
         Console.WriteLine("Test 1");
+        var queue = new PriorityQueue();
+        queue.Enqueue("A", 1);
+        queue.Enqueue("B", 2);
+        queue.Enqueue("C", 3);
+        Console.WriteLine(queue);
 
-        // Defect(s) Found: 
+        // Defect(s) Found: None
 
         Console.WriteLine("---------");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
-        Console.WriteLine("Test 2");
+        // Scenario: Remove the item with the highest priority
+        // Expected Result: [A (Pri:1), B (Pri:2)]
 
-        // Defect(s) Found: 
+        Console.WriteLine("Test 2");
+        queue.Dequeue();
+        Console.WriteLine(queue);
+
+        // Defect(s) Found: The item with the highest priority is not being removed, add 1 to the index in the for loop
+
 
         Console.WriteLine("---------");
 
-        // Add more Test Cases As Needed Below
+        // Test 3
+        // Scenario: Remove the item with the highest priority
+        // Expected Result: [A (Pri:1)]
+
+        Console.WriteLine("Test 3");
+        queue.Enqueue("A", 2);
+        queue.Dequeue();
+        Console.WriteLine(queue);
+
+        // Defect(s) Found: None
+
+        Console.WriteLine("---------");
+
+        // Test 4
+        // Scenario: Dequeue an empty queue
+        // Expected Result: Error message "The queue is empty."
+
+        Console.WriteLine("Test 4");
+        queue = new PriorityQueue();
+        queue.Dequeue();
+
+        // Defect(s) Found: None
+
+
+        Console.WriteLine("---------");
     }
 }
