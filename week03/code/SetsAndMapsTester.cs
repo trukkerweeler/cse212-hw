@@ -5,8 +5,11 @@ public static class SetsAndMapsTester {
         // Problem 1: Find Pairs with Sets
         Console.WriteLine("\n=========== Finding Pairs TESTS ===========");
         DisplayPairs(new[] { "am", "at", "ma", "if", "fi" });
-        // ma & am
-        // fi & if
+        
+
+        // am & ma
+        // if & fi
+
         Console.WriteLine("---------");
         DisplayPairs(new[] { "ab", "bc", "cd", "de", "ba" });
         // ba & ab
@@ -30,6 +33,7 @@ public static class SetsAndMapsTester {
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== Census TESTS ===========");
         Console.WriteLine(string.Join(", ", SummarizeDegrees("census.txt")));
+        
         // Results may be in a different order:
         // <Dictionary>{[Bachelors, 5355], [HS-grad, 10501], [11th, 1175],
         // [Masters, 1723], [9th, 514], [Some-college, 7291], [Assoc-acdm, 1067],
@@ -45,8 +49,8 @@ public static class SetsAndMapsTester {
         Console.WriteLine(IsAnagram("ABCCD", "ABBCD")); // false
         Console.WriteLine(IsAnagram("BC", "AD")); // false
         Console.WriteLine(IsAnagram("Ab", "Ba")); // true
-        Console.WriteLine(IsAnagram("A Decimal Point", "Im a Dot in Place")); // true
-        Console.WriteLine(IsAnagram("tom marvolo riddle", "i am lord voldemort")); // true
+        Console.WriteLine(IsAnagram("A Decimal Point", "Im a Dot in Place")); // true ||
+        Console.WriteLine(IsAnagram("tom marvolo riddle", "i am lord voldemort")); // true ||
         Console.WriteLine(IsAnagram("Eleven plus Two", "Twelve Plus One")); // true
         Console.WriteLine(IsAnagram("Eleven plus One", "Twelve Plus One")); // false
 
@@ -56,22 +60,39 @@ public static class SetsAndMapsTester {
         var maze = new Maze(map);
         maze.ShowStatus(); // Should be at (1,1)
         maze.MoveUp(); // Error
+        // maze.ShowStatus();
         maze.MoveLeft(); // Error
+        // maze.ShowStatus();
         maze.MoveRight();
+        // maze.ShowStatus();
         maze.MoveRight(); // Error
+        // maze.ShowStatus();
         maze.MoveDown();
+        // maze.ShowStatus();
         maze.MoveDown();
+        // maze.ShowStatus();
         maze.MoveDown();
+        // maze.ShowStatus();
         maze.MoveRight();
+        // maze.ShowStatus();
         maze.MoveRight();
+        // maze.ShowStatus();
         maze.MoveUp();
+        // maze.ShowStatus();
         maze.MoveRight();
+        // maze.ShowStatus();
         maze.MoveDown();
+        // maze.ShowStatus();
         maze.MoveLeft();
+        // maze.ShowStatus();
         maze.MoveDown(); // Error
+        // maze.ShowStatus();
         maze.MoveRight();
+        // maze.ShowStatus();
         maze.MoveDown();
+        // maze.ShowStatus();
         maze.MoveDown();
+        // maze.ShowStatus();
         maze.MoveRight();
         maze.ShowStatus(); // Should be at (6,6)
 
@@ -111,6 +132,21 @@ public static class SetsAndMapsTester {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+        // Put DisplayPairs in a set
+        // HashSet<string> DisplayPairs(string[] words) {
+        var wordlist = new HashSet<string>();
+        foreach (var word in words) {
+            var reverseword = new string(word.Reverse().ToArray());
+            if (words.Contains(reverseword) && wordlist.Contains(word) == false && wordlist.Contains(reverseword) == false && word != reverseword) {
+                wordlist.Add(word);
+                wordlist.Add(reverseword);
+                Console.WriteLine($"{word} & {reverseword}");
+            }
+
+            }
+            // return wordlist;
+        // }
+
     }
 
     /// <summary>
@@ -128,14 +164,25 @@ public static class SetsAndMapsTester {
     /// # Problem 2 #
     /// #############
     private static Dictionary<string, int> SummarizeDegrees(string filename) {
-        var degrees = new Dictionary<string, int>();
-        foreach (var line in File.ReadLines(filename)) {
-            var fields = line.Split(",");
-            // Todo Problem 2 - ADD YOUR CODE HERE
-        }
+        // var degrees = new Dictionary<string, int>();
+        // foreach (var line in File.ReadLines(filename)) {
+        //     var fields = line.Split(",");
+        //     // Todo Problem 2 - ADD YOUR CODE HERE
+        // }
 
-        return degrees;
-    }
+        // Create dictionary to store degrees and their counts
+            var degrees = new Dictionary<string, int>();
+            foreach (var line in File.ReadLines(filename)) {
+                var fields = line.Split(",");
+                var degree = fields[3];
+                if (degrees.ContainsKey(degree)) {
+                    degrees[degree]++;
+                } else {
+                    degrees[degree] = 1;
+                }
+            }
+            return degrees;
+        }
 
     /// <summary>
     /// Determine if 'word1' and 'word2' are anagrams.  An anagram
@@ -158,7 +205,36 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        // Compare word1 and word2 to see if they are anagrams
+        // if (word1.Length != word2.Length) {
+        //     Console.WriteLine("Words are not the same length");
+        //     return false;
+        // }
+        Dictionary<char, int> Map = new Dictionary<char, int>();
+        foreach (var letter in word1.ToLower()) {
+            if (letter != ' ') {
+                if (Map.ContainsKey(letter)) {
+                    Map[letter]++;
+                } else {
+                    Map[letter] = 1;
+                }
+            }
+        }
+        foreach (var letter in word2.ToLower()) {
+            if (letter != ' ') {
+                if (Map.ContainsKey(letter)) {
+                    Map[letter]--;
+                } else {
+                    return false;
+                }
+            }
+        }
+        foreach (var value in Map.Values) {
+            if (value != 0) {
+                return false;
+            }
+        }
+        return true;   
     }
 
     /// <summary>
@@ -204,6 +280,8 @@ public static class SetsAndMapsTester {
             { (6, 6), new[] { true, false, false, false } }
         };
         return map;
+
+        
     }
 
     /// <summary>
