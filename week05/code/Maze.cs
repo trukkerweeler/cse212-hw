@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic;
+
 public class Maze {
     public int Width { get; }
     public int Height { get; }
@@ -70,4 +72,36 @@ public class Maze {
         // Otherwise, we are good
         return true;
     }
+
+    public void SolveMaze(List<ValueTuple<int, int>> currPath, int x, int y) {
+        // Base case: If we are at the end, print the path
+        if (IsEnd(x, y)) {
+            Console.WriteLine(currPath.AsString());
+            return;
+        }
+
+        // Recursive case: Try to move in all directions
+        if (IsValidMove(currPath, x + 1, y)) {
+            currPath.Add((x + 1, y));
+            SolveMaze(currPath, x + 1, y);
+            currPath.RemoveAt(currPath.Count - 1);
+        }
+        if (IsValidMove(currPath, x - 1, y)) {
+            currPath.Add((x - 1, y));
+            SolveMaze(currPath, x - 1, y);
+            currPath.RemoveAt(currPath.Count - 1);
+        }
+        if (IsValidMove(currPath, x, y + 1)) {
+            currPath.Add((x, y + 1));
+            SolveMaze(currPath, x, y + 1);
+            currPath.RemoveAt(currPath.Count - 1);
+        }
+        if (IsValidMove(currPath, x, y - 1)) {
+            currPath.Add((x, y - 1));
+            SolveMaze(currPath, x, y - 1);
+            currPath.RemoveAt(currPath.Count - 1);
+        }
+    }
+
+
 }
