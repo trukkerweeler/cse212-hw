@@ -243,23 +243,20 @@ public static class RecursionTester {
             return 2;
         if (s == 3)
             return 4;
+   
 
-        // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
-        // implement memoization
-        if (remember != null)
-            remember[s] = ways;
+        // Solve the problem using memoization (Dictionary)
+        if (remember == null)
+            remember = new Dictionary<int, decimal>();
 
-        for (int i = 0; i < s; i++) {
-            if (remember != null && remember.ContainsKey(i)) {
-                ways += remember[i];
-            } else {
-                ways += CountWaysToClimb(i);
-            }
-        }        
+        if (remember.ContainsKey(s)) {
+            return remember[s];
+        }
 
-        // Return the total number of ways to climb the stairs
-        return ways;
+        decimal result = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+
+        remember[s] = result;
+        return result;
 
     }
 
@@ -277,7 +274,7 @@ public static class RecursionTester {
     /// some of the string functions like IndexOf and [..X] / [X..] to be useful in solving this problem.
     /// </summary>
     public static void WildcardBinary(string pattern) {
-        // TODO Start Problem 4
+        // TODO Start Problem 4 (Stacked Recursion)
         for (int i = 0; i < pattern.Length; i++) {
             if (pattern[i] == '*') {
                 WildcardBinary(pattern[..i] + "0" + pattern[(i + 1)..]);
